@@ -1,84 +1,14 @@
-interface Results{
-    winner : string;
-    date: Date;
-    
 
-    result() : string;
-    kiir() : void;
-}
-
-class Football implements Results{
-    winner: string;
-    date: Date;
-    #goalHome : number;
-    #goalAway : number;
-
-    constructor(winner: string, date: Date, goalHome : number, goalAway : number){
-        this.winner = winner;
-        this.date = date;
-        this.#goalHome = goalHome;
-        this.#goalAway = goalAway;
-    }
-
-    result(): string {
-        return "Football match: " + this.#goalHome + "-" + this.#goalAway;
-    }
-
-    kiir(): void {
-        console.log(this.result());
-    }
-    
-
-}
-
-class Marathon implements Results{
-    winner: string;
-    date: Date;
-    runtime : number;
-
-    constructor(winner: string, date: Date, runtime: number){
-        this.winner = winner;
-        this.date = date;
-        this.runtime = runtime;
-    }
+import type { Results } from './results';
+import { Football } from './football';
+import { Calvinball } from './Calvinball';
+import { Marathon } from './marathon';
 
 
-    result(): string {
-        var minute = Math.floor(this.runtime / 60);
-        var seconds = this.runtime % minute;
-        return "Marathon: " + minute + "m " + seconds + "s";    
-    }
 
-    kiir(): void {
-        console.log(this.result());
-    }
-    
-}
 
-class Calvinball implements Results{
-    #winner: string;
-    date: Date;
 
-    constructor(winner: string, date: Date){
-        this.#winner = winner;
-        this.date = date;
-    }
 
-    set winner(winner: string){
-        if(winner == "Calvin" || winner == "Hobbes"){
-            this.winner = winner;
-        }
-    }
-    result(): string {
-        var rnd = Math.random()*100 + 1;
-        return "Calvinball: " + rnd + " points";
-    }
-
-    kiir(): void {
-        console.log(this.result());
-    }
-    
-}
 
 let sports : Results[] = [
     new Football("barca", new Date("2019-01-16"), 1, 2),
@@ -88,6 +18,9 @@ let sports : Results[] = [
     new Calvinball("random3", new Date("2017-04-15")),
     new Calvinball("random4", new Date("2013-02-18")),
 ];
+
+sports.sort((a: Results, b: Results) => a.date > b.date ? 1 : -1);
+console.log(sports);
 
 for(let sport of sports){
     sport.kiir();
